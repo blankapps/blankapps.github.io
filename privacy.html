@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#000000">
+<title>Privacidad · Blank Launcher</title>
+<meta name="description" content="Política de privacidad de Blank Launcher.">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<style>
+  @font-face { font-family: "Blank Sans"; src: url("/fonts/gsf-200.woff2") format("woff2"); font-weight: 200; font-display: swap; }
+  @font-face { font-family: "Blank Sans"; src: url("/fonts/gsf-300.woff2") format("woff2"); font-weight: 300; font-display: swap; }
+  @font-face { font-family: "Blank Sans"; src: url("/fonts/gsf-400.woff2") format("woff2"); font-weight: 400; font-display: swap; }
+  @font-face { font-family: "Blank Sans"; src: url("/fonts/gsf-500.woff2") format("woff2"); font-weight: 500; font-display: swap; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #000; color: #fff; font-family: "Blank Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; font-weight: 300; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+  .wrap { max-width: 720px; margin: 0 auto; padding: 0 24px; }
+  .topbar { display: flex; justify-content: space-between; align-items: center; height: 88px; }
+  .brand { font-size: 13px; font-weight: 500; letter-spacing: 4px; color: #AAAAAA; text-decoration: none; }
+  .lang { display: flex; align-items: center; }
+  .lang button { font: inherit; font-size: 14px; font-weight: 400; background: none; border: 0; color: #888; min-width: 44px; height: 44px; cursor: pointer; letter-spacing: 1px; }
+  .lang button[aria-pressed="true"] { color: #fff; }
+  .lang span { color: #555; }
+  .lang button:focus-visible, a:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+  h1 { margin-top: 40px; font-size: 48px; font-weight: 200; letter-spacing: -1px; line-height: 1.1; }
+  .date { margin-top: 12px; font-size: 14px; color: #888; }
+  .intro { margin-top: 32px; font-size: 19px; color: #AAAAAA; }
+  h2 { margin-top: 48px; font-size: 13px; font-weight: 500; letter-spacing: 1.6px; text-transform: uppercase; color: #888; }
+  p, li { margin-top: 12px; font-size: 17px; color: #DDDDDD; }
+  ul { list-style: none; }
+  li { padding-left: 22px; position: relative; }
+  li::before { content: ""; position: absolute; left: 0; top: .8em; width: 10px; height: 1px; background: #888; }
+  strong { font-weight: 400; color: #fff; }
+  a { color: #fff; }
+  footer { margin-top: 96px; border-top: 1px solid #1F1F1F; padding: 32px 0 48px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 16px; font-size: 14px; color: #888; }
+  footer a { color: #AAAAAA; text-decoration: none; padding: 12px; margin: -12px; }
+  footer a:hover { color: #fff; }
+  [data-lang] { display: none; }
+  html[lang="es"] [data-lang="es"], html[lang="en"] [data-lang="en"] { display: block; }
+  @media (max-width: 600px) { h1 { font-size: 38px; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="topbar">
+    <a class="brand" href="/">BLANK</a>
+    <div class="lang" role="group" aria-label="Idioma / Language">
+      <button id="btn-es" type="button" onclick="setLang('es')" aria-pressed="true">ES</button>
+      <span aria-hidden="true">/</span>
+      <button id="btn-en" type="button" onclick="setLang('en')" aria-pressed="false">EN</button>
+    </div>
+  </header>
+
+  <main>
+  <article data-lang="es">
+    <h1>Política de privacidad</h1>
+    <p class="date">Blank Launcher · Actualizada en noviembre de 2026</p>
+    <p class="intro">Blank Launcher es un launcher minimalista para Android, desarrollado por Blank Apps. No recolectamos tus datos.</p>
+
+    <h2>Datos que recolectamos</h2>
+    <p>Ninguno. Blank Launcher no tiene cuentas, analíticas, anuncios ni seguimiento. No recolectamos, vendemos ni compartimos datos personales.</p>
+
+    <h2>Datos guardados en tu teléfono</h2>
+    <p>Tu configuración (apps favoritas, apps ocultas y renombradas, temporizadores, ventanas de foco, meta de tiempo en pantalla y racha) se guarda solo en tu teléfono.</p>
+    <p>Si tenés activado el backup de Android, Android puede incluir esa configuración en el backup de tu cuenta de Google para restaurarla en un teléfono nuevo. Eso lo manejan Android y Google, no nosotros. Tu estado Pro queda fuera de ese backup y siempre se verifica con Google Play.</p>
+
+    <h2>Tiempo en pantalla</h2>
+    <p>Si abrís Tiempo en pantalla, Blank Launcher te pide acceso a los datos de uso. Esos datos se leen y procesan solo en tu teléfono para mostrarte tu tiempo diario, las apps que más usás y tu racha. Nunca salen de tu teléfono.</p>
+
+    <h2>Uso de internet</h2>
+    <p>Blank Launcher se conecta a internet solo para:</p>
+    <ul>
+      <li>Procesar la compra de Blank Pro a través de Google Play Billing.</li>
+      <li>Mostrar el pedido de reseña de Google Play dentro de la app.</li>
+      <li>Revisar si hay una actualización obligatoria, descargando un pequeño archivo de versión desde GitHub. No se envían datos personales; como en cualquier pedido web, GitHub recibe información técnica estándar, como tu dirección IP.</li>
+    </ul>
+
+    <h2>Permisos</h2>
+    <ul>
+      <li><strong>Acceso a datos de uso:</strong> solo para Tiempo en pantalla.</li>
+      <li><strong>Ver tus apps instaladas:</strong> para mostrarlas en el launcher.</li>
+      <li><strong>Solicitar desinstalación de apps:</strong> para que puedas desinstalar apps desde el menú de cada una. Android siempre te pide confirmación.</li>
+      <li><strong>Internet:</strong> para los usos de arriba.</li>
+    </ul>
+
+    <h2>Compras dentro de la app</h2>
+    <p>Blank Pro es un pago único procesado completamente por Google Play. Nunca vemos ni guardamos tus datos de pago.</p>
+
+    <h2>Menores</h2>
+    <p>Blank Launcher no está dirigida a menores y no recolecta datos de nadie a sabiendas.</p>
+
+    <h2>Contacto</h2>
+    <p><a href="mailto:blankappsdev@gmail.com">blankappsdev@gmail.com</a></p>
+
+    <h2>Cambios</h2>
+    <p>Podemos actualizar esta política. Los cambios se publican en esta página con una fecha nueva.</p>
+  </article>
+
+  <article data-lang="en">
+    <h1>Privacy Policy</h1>
+    <p class="date">Blank Launcher · Last updated November 2026</p>
+    <p class="intro">Blank Launcher is a minimal Android launcher developed by Blank Apps. We don't collect your data.</p>
+
+    <h2>Data we collect</h2>
+    <p>None. Blank Launcher has no accounts, no analytics, no ads and no tracking. We do not collect, sell or share personal data.</p>
+
+    <h2>Data stored on your device</h2>
+    <p>Your settings (favorite apps, hidden and renamed apps, timers, focus windows, screen time goal and streak) are stored only on your device.</p>
+    <p>If Android backup is enabled on your phone, Android may include these settings in your Google account backup so they can be restored on a new device. This is handled by Android and Google, not by us. Your Pro status is excluded from this backup and is always verified with Google Play.</p>
+
+    <h2>Screen time</h2>
+    <p>If you open Screen time, Blank Launcher asks for access to usage data. It is read and processed only on your device to show your daily screen time, most used apps and streak. It never leaves your phone.</p>
+
+    <h2>Internet use</h2>
+    <p>Blank Launcher connects to the internet only to:</p>
+    <ul>
+      <li>Process the Blank Pro purchase through Google Play Billing.</li>
+      <li>Show the Google Play in-app review prompt.</li>
+      <li>Check whether a required update is available, by downloading a small version file from GitHub. No personal data is sent; as with any web request, GitHub receives standard technical information such as your IP address.</li>
+    </ul>
+
+    <h2>Permissions</h2>
+    <ul>
+      <li><strong>Usage access:</strong> only for the Screen time feature.</li>
+      <li><strong>Installed apps:</strong> to list your apps in the launcher.</li>
+      <li><strong>Request app uninstall:</strong> so you can uninstall apps from each app's menu. Android always asks you to confirm.</li>
+      <li><strong>Internet:</strong> for the uses listed above.</li>
+    </ul>
+
+    <h2>In-app purchases</h2>
+    <p>Blank Pro is a one-time purchase processed entirely by Google Play. We never see or store your payment information.</p>
+
+    <h2>Children</h2>
+    <p>Blank Launcher is not directed to children and does not knowingly collect data from anyone.</p>
+
+    <h2>Contact</h2>
+    <p><a href="mailto:blankappsdev@gmail.com">blankappsdev@gmail.com</a></p>
+
+    <h2>Changes</h2>
+    <p>We may update this policy. Changes will be posted on this page with a new date.</p>
+  </article>
+  </main>
+
+  <footer>
+    <div>© 2026 Blank Apps</div>
+    <a href="/" id="home-link">Volver al inicio</a>
+  </footer>
+</div>
+<script>
+  function setLang(lang) {
+    document.documentElement.lang = lang;
+    document.title = lang === "es" ? "Privacidad · Blank Launcher" : "Privacy · Blank Launcher";
+    document.getElementById("home-link").textContent = lang === "es" ? "Volver al inicio" : "Back to home";
+    document.getElementById("btn-es").setAttribute("aria-pressed", lang === "es");
+    document.getElementById("btn-en").setAttribute("aria-pressed", lang === "en");
+    try { localStorage.setItem("blank_lang", lang); } catch (e) {}
+  }
+  (function () {
+    const q = new URLSearchParams(location.search).get("lang");
+    let lang = q === "en" || q === "es" ? q : null;
+    if (!lang) { try { lang = localStorage.getItem("blank_lang"); } catch (e) {} }
+    if (!lang) lang = (navigator.language || "es").toLowerCase().startsWith("es") ? "es" : "en";
+    setLang(lang);
+  })();
+</script>
+</body>
+</html>
