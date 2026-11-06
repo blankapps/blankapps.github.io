@@ -5,156 +5,170 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#000000">
 <title>Blank Launcher: Digital Detox</title>
-  <link rel="icon" href="/favicon.ico" sizes="any">
-  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-  <link rel="manifest" href="/site.webmanifest">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="preload" href="/fonts/gsf-200.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/gsf-300.woff2" as="font" type="font/woff2" crossorigin>
 
-<!-- SEO -->
-<meta name="description" content="Un launcher minimalista para Android. Pantalla negra, reloj, tus apps. Nada que compita por tu atención.">
+<meta name="description" content="Blank Launcher es un launcher minimalista para Android: negro OLED, solo texto, con temporizadores y foco programado para usar menos el teléfono.">
 
-<!-- Open Graph -->
 <meta property="og:type" content="website">
 <meta property="og:title" content="Blank Launcher: Digital Detox">
-<meta property="og:description" content="El launcher que no compite por tu atención. Pantalla negra OLED, sin widgets, sin notificaciones.">
+<meta property="og:description" content="Tu teléfono, más tranquilo. Un launcher minimalista con temporizadores y foco programado.">
 <meta property="og:image" content="https://blankapps.github.io/img/og.png">
 <meta property="og:url" content="https://blankapps.github.io/">
-
-<!-- Twitter -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Blank Launcher: Digital Detox">
-<meta name="twitter:description" content="El launcher que no compite por tu atención.">
+<meta name="twitter:description" content="Tu teléfono, más tranquilo.">
 <meta name="twitter:image" content="https://blankapps.github.io/img/og.png">
 
 <style>
-  :root {
-    --bg: #000000;
-    --fg: #FFFFFF;
-    --secondary: #AAAAAA;
-    --subtle: #666666;
-    --disabled: #444444;
-    --border: #1a1a1a;
-  }
+  @font-face { font-family: "Blank Sans"; src: url("/fonts/gsf-200.woff2") format("woff2"); font-weight: 200; font-display: swap; }
+  @font-face { font-family: "Blank Sans"; src: url("/fonts/gsf-300.woff2") format("woff2"); font-weight: 300; font-display: swap; }
+  @font-face { font-family: "Blank Sans"; src: url("/fonts/gsf-400.woff2") format("woff2"); font-weight: 400; font-display: swap; }
+  @font-face { font-family: "Blank Sans"; src: url("/fonts/gsf-500.woff2") format("woff2"); font-weight: 500; font-display: swap; }
 
+  :root {
+    --bg: #000; --fg: #fff; --t2: #AAAAAA; --t3: #888888; --dis: #555555;
+    --line: #262626; --div: #1F1F1F; --surface: #141414; --frame: #2A2A2A; --danger: #E06C6C;
+  }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html { scroll-behavior: smooth; }
-
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
   body {
-    background: var(--bg);
-    color: var(--fg);
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    line-height: 1.5;
-    -webkit-font-smoothing: antialiased;
+    background: var(--bg); color: var(--fg);
+    font-family: "Blank Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    font-weight: 300; line-height: 1.5; -webkit-font-smoothing: antialiased;
   }
-
-  .wrap { max-width: 960px; margin: 0 auto; padding: 0 24px; }
+  a { color: inherit; }
+  .wrap { max-width: 1040px; margin: 0 auto; padding: 0 32px; }
+  .caption { font-size: 12px; font-weight: 500; letter-spacing: 1.6px; text-transform: uppercase; color: var(--t3); }
+  .pro { display: inline-block; font-size: 11px; font-weight: 500; letter-spacing: 2px; color: var(--t2); border: 1px solid #444; border-radius: 999px; padding: 3px 10px; vertical-align: middle; }
 
   /* Top bar */
-  .topbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 24px 0;
+  .topbar { display: flex; justify-content: space-between; align-items: center; height: 88px; }
+  .brand { font-size: 13px; font-weight: 500; letter-spacing: 4px; color: var(--t2); text-decoration: none; }
+  .lang { display: flex; align-items: center; }
+  .lang button {
+    font: inherit; font-size: 14px; font-weight: 400; background: none; border: 0; color: var(--t3);
+    min-width: 44px; height: 44px; cursor: pointer; letter-spacing: 1px;
   }
-  .brand { font-size: 15px; letter-spacing: 0.5px; color: var(--secondary); }
-  .lang-toggle { display: flex; gap: 4px; font-size: 13px; }
-  .lang-toggle button {
-    background: none; border: none; color: var(--subtle);
-    cursor: pointer; padding: 4px 8px; font-size: 13px; letter-spacing: 0.5px;
+  .lang button[aria-pressed="true"] { color: var(--fg); }
+  .lang span { color: var(--dis); }
+
+  /* Buttons */
+  .cta {
+    display: inline-flex; align-items: center; gap: 10px; height: 56px; padding: 0 32px;
+    background: var(--fg); color: #000; border-radius: 28px; text-decoration: none;
+    font-size: 16px; font-weight: 500; transition: opacity .15s;
   }
-  .lang-toggle button.active { color: var(--fg); }
-  .lang-toggle .sep { color: var(--disabled); align-self: center; }
+  .cta:hover { opacity: .85; }
+  .cta:focus-visible, .lang button:focus-visible, summary:focus-visible, footer a:focus-visible { outline: 2px solid var(--fg); outline-offset: 3px; }
+  .cta svg { width: 18px; height: 18px; }
+  .note { margin-top: 16px; font-size: 14px; color: var(--t3); }
+
+  /* Phone */
+  .phone {
+    --w: 300px; width: var(--w); height: calc(var(--w) * 2.2223); flex-shrink: 0;
+    border-radius: calc(var(--w) * 0.115); box-shadow: 0 0 0 2px var(--frame);
+    position: relative; overflow: hidden; background: #000;
+  }
+  .scr {
+    position: absolute; left: 0; top: 0; width: 392.7px; height: 872.7px;
+    transform: scale(calc(var(--w) / 392.7px)); transform-origin: 0 0;
+  }
+  @supports not (transform: scale(calc(1px / 1px))) { .scr { transform: scale(.764); } }
 
   /* Hero */
-  .hero {
-    display: flex;
-    align-items: center;
-    gap: 56px;
-    padding: 56px 0 88px;
-  }
-  .hero-text { flex: 1; }
-  .hero h1 {
-    font-size: 42px; font-weight: 600; line-height: 1.15;
-    letter-spacing: -0.5px; margin-bottom: 20px;
-  }
-  .hero p.sub {
-    font-size: 18px; color: var(--secondary);
-    margin-bottom: 32px; max-width: 420px;
-  }
-  .cta {
-    display: inline-block; background: var(--fg); color: var(--bg);
-    text-decoration: none; padding: 14px 28px; border-radius: 8px;
-    font-weight: 600; font-size: 15px; transition: opacity 0.15s;
-  }
-  .cta:hover { opacity: 0.85; }
+  .hero { display: flex; align-items: center; justify-content: space-between; gap: 64px; padding: 48px 0 120px; }
+  .hero h1, .feature h2, .plans h2, .closing h2 { text-wrap: balance; }
+  .hero h1 { font-size: 64px; font-weight: 200; line-height: 1.08; letter-spacing: -1.5px; }
+  .hero .sub { margin-top: 24px; font-size: 20px; color: var(--t2); max-width: 440px; }
+  .hero .actions { margin-top: 40px; }
 
-  .hero-visual { flex: 0 0 auto; width: 300px; }
-  .hero-visual img {
-    width: 100%; height: auto; display: block; border-radius: 16px;
-  }
+  /* Sections */
+  section { border-top: 1px solid var(--div); }
+  .feature { display: flex; align-items: center; gap: 96px; padding: 112px 0; }
+  .feature.rev { flex-direction: row-reverse; }
+  .feature .text { flex: 1; max-width: 440px; }
+  .feature h2 { margin-top: 16px; font-size: 40px; font-weight: 200; line-height: 1.15; letter-spacing: -.5px; }
+  .feature p { margin-top: 20px; font-size: 18px; color: var(--t2); }
+  .feature ul { margin-top: 24px; list-style: none; display: grid; gap: 10px; }
+  .feature li { font-size: 16px; color: var(--t2); padding-left: 22px; position: relative; }
+  .feature li::before { content: ""; position: absolute; left: 0; top: .72em; width: 10px; height: 1px; background: var(--t3); }
 
-  /* Features */
-  .features { padding: 24px 0 72px; }
-  .features-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 32px 40px;
-  }
-  .feature .label {
-    font-size: 13px; letter-spacing: 1px; text-transform: uppercase;
-    color: var(--subtle); margin-bottom: 8px;
-  }
-  .feature .title { font-size: 17px; font-weight: 600; margin-bottom: 6px; }
-  .feature .desc { font-size: 15px; color: var(--secondary); }
+  /* Free vs Pro */
+  .plans { padding: 112px 0; }
+  .plans h2, .faq h2 { font-size: 40px; font-weight: 200; letter-spacing: -.5px; line-height: 1.15; }
+  .plans-grid { margin-top: 48px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+  .plan { border: 1px solid var(--line); border-radius: 28px; padding: 36px; }
+  .plan.on { border-color: #555; }
+  .plan h3 { font-size: 24px; font-weight: 300; display: flex; align-items: center; gap: 12px; }
+  .plan .price { margin-top: 6px; font-size: 15px; color: var(--t3); }
+  .plan ul { margin-top: 28px; list-style: none; display: grid; gap: 14px; }
+  .plan li { display: flex; gap: 14px; font-size: 16px; color: var(--t2); }
+  .plan li svg { flex-shrink: 0; margin-top: 3px; }
 
-  /* Screenshots strip */
-  .shots { padding: 40px 0 72px; }
-  .shots h2 {
-    font-size: 24px; font-weight: 600; margin-bottom: 40px; text-align: center;
+  /* FAQ */
+  .faq { padding: 112px 0; }
+  .faq-list { margin-top: 40px; max-width: 760px; }
+  details { border-bottom: 1px solid var(--div); }
+  summary {
+    list-style: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 24px;
+    min-height: 72px; font-size: 19px; font-weight: 300;
   }
-  .shots-row {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
-    align-items: start;
-  }
-  .shot img { width: 100%; height: auto; display: block; border-radius: 14px; }
-  .shot .caption {
-    font-size: 14px; color: var(--secondary);
-    text-align: center; margin-top: 14px;
-  }
+  summary::-webkit-details-marker { display: none; }
+  summary svg { flex-shrink: 0; transition: transform .2s; }
+  details[open] summary svg { transform: rotate(45deg); }
+  details p { padding: 0 48px 28px 0; font-size: 16px; color: var(--t2); }
 
-  /* Closing CTA */
-  .closing {
-    text-align: center; padding: 64px 0 80px;
-    border-top: 1px solid var(--border);
-  }
-  .closing h2 {
-    font-size: 28px; font-weight: 600; margin-bottom: 12px; letter-spacing: -0.3px;
-  }
-  .closing p { color: var(--secondary); margin-bottom: 28px; }
+  /* Closing */
+  .closing { text-align: center; padding: 128px 0; }
+  .closing h2 { font-size: 48px; font-weight: 200; letter-spacing: -1px; line-height: 1.1; }
+  .closing .sub { margin: 20px auto 40px; font-size: 18px; color: var(--t2); }
 
-  /* Footer */
   footer {
-    border-top: 1px solid var(--border);
-    padding: 32px 0 48px;
-    display: flex; justify-content: space-between; align-items: center;
-    flex-wrap: wrap; gap: 16px; font-size: 13px; color: var(--subtle);
+    border-top: 1px solid var(--div); padding: 32px 0 48px;
+    display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;
+    font-size: 14px; color: var(--t3);
   }
-  footer a { color: var(--secondary); text-decoration: none; }
+  footer nav { display: flex; gap: 8px; flex-wrap: wrap; }
+  footer a { color: var(--t2); text-decoration: none; padding: 12px; }
   footer a:hover { color: var(--fg); }
-  footer .links { display: flex; gap: 24px; }
 
-  /* Mobile */
-  @media (max-width: 720px) {
-    .hero {
-      flex-direction: column; text-align: center; gap: 36px; padding: 32px 0 56px;
-    }
-    .hero p.sub { margin-left: auto; margin-right: auto; }
-    .hero h1 { font-size: 32px; }
-    .hero-visual { width: 220px; }
-    .shots-row { grid-template-columns: 1fr; max-width: 300px; margin: 0 auto; gap: 40px; }
-    footer { flex-direction: column; text-align: center; }
+  /* Screen contents (dp units, as in the app) */
+  .s-home { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; }
+  .s-clock { margin-top: 96px; font-size: 112px; font-weight: 200; letter-spacing: -3px; line-height: 1.05; font-variant-numeric: tabular-nums; }
+  .s-date { margin-top: 14px; font-size: 18px; color: var(--t2); }
+  .s-favs { position: absolute; top: 470px; left: 0; right: 0; display: flex; flex-direction: column; align-items: center; }
+  .s-favs div { font-size: 22px; font-weight: 400; padding: 12px 0; }
+  .s-center { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 0 32px; }
+  .pill { height: 52px; border-radius: 26px; display: flex; align-items: center; justify-content: center; font-size: 16px; }
+  .pill.fill { background: #fff; color: #000; font-weight: 500; }
+  .pill.line { border: 1px solid #333; color: var(--dis); }
+  .s-page { position: absolute; inset: 0; padding: 40px 32px 0; }
+  .s-head { display: flex; align-items: center; gap: 16px; height: 48px; font-size: 22px; }
+  .s-cap { font-size: 12px; font-weight: 500; letter-spacing: 1.2px; color: var(--t3); }
+  .s-row { display: flex; justify-content: space-between; padding: 8px 0; font-size: 16px; }
+  .s-row span:first-child { color: var(--t2); }
+
+  @media (max-width: 860px) {
+    .wrap { padding: 0 24px; }
+    .hero { flex-direction: column; align-items: flex-start; gap: 56px; padding: 24px 0 88px; }
+    .hero h1 { font-size: 46px; }
+    .hero .phone { align-self: center; --w: 240px; }
+    .feature, .feature.rev { flex-direction: column; align-items: flex-start; gap: 48px; padding: 88px 0; }
+    .feature .phone { align-self: center; --w: 220px; }
+    .feature h2, .plans h2, .faq h2 { font-size: 34px; }
+    .plans, .faq { padding: 88px 0; }
+    .plans-grid { grid-template-columns: 1fr; }
+    .plan { padding: 28px; }
+    .closing { padding: 96px 0; }
+    .closing h2 { font-size: 38px; }
+    footer { flex-direction: column; align-items: flex-start; }
+    footer nav { margin-left: -12px; }
   }
 </style>
 </head>
@@ -162,92 +176,197 @@
 
 <div class="wrap">
 
-  <!-- Top bar -->
-  <div class="topbar">
-    <div class="brand">Blank Apps</div>
-    <div class="lang-toggle">
-      <button id="btn-es" onclick="setLang('es')">ES</button>
-      <span class="sep">/</span>
-      <button id="btn-en" onclick="setLang('en')">EN</button>
+  <header class="topbar">
+    <a class="brand" href="/">BLANK</a>
+    <div class="lang" role="group" aria-label="Idioma / Language">
+      <button id="btn-es" type="button" onclick="setLang('es')" aria-pressed="true">ES</button>
+      <span aria-hidden="true">/</span>
+      <button id="btn-en" type="button" onclick="setLang('en')" aria-pressed="false">EN</button>
+    </div>
+  </header>
+
+  <main>
+  <div class="hero">
+    <div>
+      <h1 data-i18n="hero_title">Tu teléfono, más tranquilo.</h1>
+      <p class="sub" data-i18n="hero_sub">Un launcher minimalista para Android. Negro OLED, solo texto, y herramientas para que abras menos lo que te distrae.</p>
+      <div class="actions">
+        <a class="cta" href="https://play.google.com/store/apps/details?id=com.blanklauncher.app">
+          <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="#000" stroke-width="1.8" stroke-linejoin="round"><path d="M5 3.5v17l14-8.5z"/></svg>
+          <span data-i18n="cta">Descargar en Google Play</span>
+        </a>
+        <p class="note" data-i18n="cta_note">Gratis. Pro con un solo pago, sin suscripción.</p>
+      </div>
+    </div>
+    <div class="phone" role="img" aria-label="Pantalla de inicio de Blank Launcher" data-i18n-label="alt_home">
+      <div class="scr" aria-hidden="true">
+        <div class="s-home">
+          <div class="s-clock" id="clock">08:30</div>
+          <div class="s-date" id="date">Jueves, 5 de noviembre</div>
+          <div class="s-favs">
+            <div data-i18n="app_phone">Teléfono</div><div data-i18n="app_messages">Mensajes</div><div data-i18n="app_camera">Cámara</div><div data-i18n="app_maps">Mapas</div><div>Spotify</div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
-  <!-- Hero -->
-  <section class="hero">
-    <div class="hero-text">
-      <h1 data-i18n="hero_title"></h1>
-      <p class="sub" data-i18n="hero_sub"></p>
-      <a class="cta" href="https://play.google.com/store/apps/details?id=com.blanklauncher.app" data-i18n="cta"></a>
+  <section class="feature rev" aria-labelledby="f1">
+    <div class="text">
+      <span class="pro">PRO</span>
+      <h2 id="f1" data-i18n="f1_title">Diez segundos para pensarlo dos veces.</h2>
+      <p data-i18n="f1_desc">Ponele un temporizador a las apps que te roban tiempo. Antes de abrirlas, una pausa corta te devuelve la decisión.</p>
+      <ul>
+        <li data-i18n="f1_l1">Cuenta regresiva: se abre sola a los 10 segundos, salvo que la canceles.</li>
+        <li data-i18n="f1_l2">Pregunta: esperás 10 segundos y tenés que confirmar que querés entrar.</li>
+      </ul>
     </div>
-    <div class="hero-visual">
-      <img src="img/hero.jpg" alt="Blank Launcher home screen">
-    </div>
-  </section>
-
-  <!-- Features -->
-  <section class="features">
-    <div class="features-grid">
-      <div class="feature">
-        <div class="label">home</div>
-        <div class="title" data-i18n="f1_title"></div>
-        <div class="desc" data-i18n="f1_desc"></div>
-      </div>
-      <div class="feature">
-        <div class="label">friction</div>
-        <div class="title" data-i18n="f2_title"></div>
-        <div class="desc" data-i18n="f2_desc"></div>
-      </div>
-      <div class="feature">
-        <div class="label">focus</div>
-        <div class="title" data-i18n="f3_title"></div>
-        <div class="desc" data-i18n="f3_desc"></div>
-      </div>
-      <div class="feature">
-        <div class="label">display</div>
-        <div class="title" data-i18n="f4_title"></div>
-        <div class="desc" data-i18n="f4_desc"></div>
-      </div>
-      <div class="feature">
-        <div class="label">always</div>
-        <div class="title" data-i18n="f5_title"></div>
-        <div class="desc" data-i18n="f5_desc"></div>
+    <div class="phone" role="img" aria-label="Cuenta regresiva de 10 segundos antes de abrir Instagram" data-i18n-label="alt_count">
+      <div class="scr" aria-hidden="true">
+        <div class="s-center">
+          <div style="font-size:16px;color:var(--t2)">Instagram</div>
+          <div style="font-size:128px;font-weight:200;line-height:1.05;margin-top:8px">7</div>
+          <div style="margin-top:24px;font-size:22px" data-i18n="s_sure">¿Seguro que querés abrirla?</div>
+          <div style="margin-top:8px;font-size:14px;color:var(--t3)" data-i18n="s_tap">Tocá en cualquier lado para cancelar</div>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- Screenshots -->
-  <section class="shots">
-    <h2 data-i18n="shots_title"></h2>
-    <div class="shots-row">
-      <div class="shot">
-        <img src="img/friction.jpg" alt="10 second pause">
-        <div class="caption" data-i18n="cap_friction"></div>
-      </div>
-      <div class="shot">
-        <img src="img/focus.jpg" alt="Focus block">
-        <div class="caption" data-i18n="cap_focus"></div>
-      </div>
-      <div class="shot">
-        <img src="img/screentime.jpg" alt="Screen time">
-        <div class="caption" data-i18n="cap_screentime"></div>
+  <section class="feature" aria-labelledby="f2">
+    <div class="text">
+      <span class="pro">PRO</span>
+      <h2 id="f2" data-i18n="f2_title">Bloqueá apps en tus horarios de foco.</h2>
+      <p data-i18n="f2_desc">Armá ventanas para el trabajo, el estudio o la noche. Durante esas horas, las apps que elijas no se abren desde Blank.</p>
+      <ul>
+        <li data-i18n="f2_l1">Horario, días y apps para cada ventana.</li>
+        <li data-i18n="f2_l2">Si de verdad la necesitás, podés abrirla igual por 5 minutos. Queda registrado.</li>
+      </ul>
+    </div>
+    <div class="phone" role="img" aria-label="Instagram bloqueada hasta las 18:00 por foco programado" data-i18n-label="alt_block">
+      <div class="scr" aria-hidden="true">
+        <div class="s-center" style="padding-bottom:140px">
+          <div class="s-cap" style="letter-spacing:1.6px;color:var(--t2)" data-i18n="s_fcap">FOCO PROGRAMADO · TRABAJO</div>
+          <div style="margin-top:20px;font-size:44px;font-weight:200" data-i18n="s_until">Hasta las 18:00</div>
+          <div style="margin-top:16px;font-size:18px;color:var(--t2)" data-i18n="s_paused">Instagram está en pausa.</div>
+        </div>
+        <div style="position:absolute;left:32px;right:32px;bottom:40px;text-align:center">
+          <div class="pill fill" data-i18n="s_back">Volver</div>
+          <div style="margin-top:20px;font-size:15px;color:var(--t2)" data-i18n="s_anyway">Abrir igual por 5 min</div>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- Closing CTA -->
-  <section class="closing">
-    <h2 data-i18n="closing_title"></h2>
-    <p data-i18n="closing_sub"></p>
-    <a class="cta" href="https://play.google.com/store/apps/details?id=com.blanklauncher.app" data-i18n="cta"></a>
+  <section class="feature rev" aria-labelledby="f3">
+    <div class="text">
+      <span class="pro">PRO</span>
+      <h2 id="f3" data-i18n="f3_title">Mirá a dónde se va tu día.</h2>
+      <p data-i18n="f3_desc">Tu tiempo en pantalla, las apps que más usás y una racha de días bajo tu meta. Todo se calcula en tu teléfono.</p>
+    </div>
+    <div class="phone" role="img" aria-label="Pantalla de tiempo en pantalla con 1 h 42 min hoy" data-i18n-label="alt_stats">
+      <div class="scr" aria-hidden="true">
+        <div class="s-page">
+          <div class="s-head"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M11 6l-6 6 6 6"/></svg><span data-i18n="s_st">Tiempo en pantalla</span></div>
+          <div class="s-cap" style="margin-top:28px" data-i18n="s_today">HOY</div>
+          <div style="margin-top:4px;font-size:64px;font-weight:200;letter-spacing:-2px">1 h 42 min</div>
+          <div style="margin-top:14px;height:4px;border-radius:2px;background:var(--line)"><div style="width:71%;height:4px;border-radius:2px;background:#fff"></div></div>
+          <div style="margin-top:10px;display:flex;justify-content:space-between;font-size:14px"><span style="color:var(--t3)" data-i18n="s_left">Quedan 18 min</span><span style="color:var(--t2)" data-i18n="s_goal">Meta: 2 h</span></div>
+          <div style="margin-top:22px;font-size:20px" data-i18n="s_streak">5 días seguidos bajo 2 h</div>
+          <div class="s-cap" style="margin-top:36px" data-i18n="s_top">APPS MÁS USADAS HOY</div>
+          <div style="margin-top:6px">
+            <div class="s-row"><span>WhatsApp</span><span>38 min</span></div>
+            <div class="s-row"><span>Chrome</span><span>24 min</span></div>
+            <div class="s-row"><span>Spotify</span><span>19 min</span></div>
+            <div class="s-row"><span>Instagram</span><span>11 min</span></div>
+            <div class="s-row"><span data-i18n="app_maps">Mapas</span><span>6 min</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
   </section>
 
-  <!-- Footer -->
+  <section class="feature" aria-labelledby="f4">
+    <div class="text">
+      <span class="caption" data-i18n="f4_cap">Gratis</span>
+      <h2 id="f4" data-i18n="f4_title">Solo texto. Ningún ícono te llama.</h2>
+      <p data-i18n="f4_desc">Sin colores, sin badges, sin widgets. Deslizá hacia arriba y buscá lo que necesitás.</p>
+      <ul>
+        <li data-i18n="f4_l1">Hasta 6 apps favoritas en el inicio.</li>
+        <li data-i18n="f4_l2">Ocultá y renombrá apps.</li>
+        <li data-i18n="f4_l3">Tres tamaños de texto.</li>
+      </ul>
+    </div>
+    <div class="phone" role="img" aria-label="Cajón de apps en texto" data-i18n-label="alt_drawer">
+      <div class="scr" aria-hidden="true">
+        <div class="s-page">
+          <div style="display:flex;justify-content:space-between;align-items:center;height:48px"><span style="font-size:14px;color:var(--t2)" data-i18n="s_select">Seleccionar</span>
+            <span style="display:flex;gap:24px;margin-right:8px"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#AAA" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M9.6 9.3a2.5 2.5 0 0 1 4.8.9c0 1.7-2.4 2.2-2.4 3.6"/><path d="M12 17h.01"/></svg><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#AAA" stroke-width="1.5" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg></span></div>
+          <div id="drawer" style="margin-top:20px;font-size:20px;font-weight:400"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="plans" aria-labelledby="plans">
+    <h2 id="plans" data-i18n="plans_title">Gratis para empezar. Pro para quedarte.</h2>
+    <div class="plans-grid">
+      <div class="plan">
+        <h3 data-i18n="plan_free">Gratis</h3>
+        <p class="price" data-i18n="plan_free_p">Para siempre</p>
+        <ul>
+          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg><span data-i18n="pf1">Inicio en negro OLED con reloj y favoritas</span></li>
+          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg><span data-i18n="pf2">Cajón de apps en texto, con búsqueda</span></li>
+          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg><span data-i18n="pf3">Ocultar y renombrar apps</span></li>
+          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg><span data-i18n="pf4">Tamaño de texto ajustable</span></li>
+        </ul>
+      </div>
+      <div class="plan on">
+        <h3>Pro <span class="pro" data-i18n="plan_pro_tag">PAGO ÚNICO</span></h3>
+        <p class="price" data-i18n="plan_pro_p">Sin suscripción y sin anuncios</p>
+        <ul>
+          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg><span data-i18n="pp0">Todo lo gratis, y además:</span></li>
+          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg><span data-i18n="pp1">Temporizador por app, en dos modos</span></li>
+          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg><span data-i18n="pp2">Foco programado con bloqueo por horario</span></li>
+          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg><span data-i18n="pp3">Tiempo en pantalla por app</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="faq" aria-labelledby="faq">
+    <h2 id="faq" data-i18n="faq_title">Preguntas frecuentes</h2>
+    <div class="faq-list">
+      <details><summary><span data-i18n="q1">¿Cómo vuelvo a mi launcher anterior?</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#AAA" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></summary>
+        <p data-i18n="a1">En Ajustes de Android, buscá "App de inicio" (o "Apps predeterminadas") y elegí el que usabas antes. Tus apps y tu pantalla anterior siguen ahí, Blank no borra nada.</p></details>
+      <details><summary><span data-i18n="q2">¿Qué permisos pide?</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#AAA" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></summary>
+        <p data-i18n="a2">Ver tus apps instaladas, para poder mostrarlas. Y, solo si usás Tiempo en pantalla, acceso a los datos de uso, que se leen en tu teléfono y no salen de ahí.</p></details>
+      <details><summary><span data-i18n="q3">¿Recolecta mis datos?</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#AAA" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></summary>
+        <p data-i18n="a3">No. Sin cuentas, sin analíticas y sin anuncios. La compra de Pro la procesa Google Play.</p></details>
+      <details><summary><span data-i18n="q4">¿El foco programado bloquea todo?</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#AAA" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></summary>
+        <p data-i18n="a4">Bloquea abrir esas apps desde Blank. No cierra apps que ya estén abiertas ni intercepta links desde otras apps. Es un portero en la puerta, no un guardia: está pensado para cortar el gesto automático, no para encerrarte.</p></details>
+      <details><summary><span data-i18n="q5">¿Pro es una suscripción?</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#AAA" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></summary>
+        <p data-i18n="a5">No. Pagás una vez y queda asociado a tu cuenta de Google, también si cambiás de teléfono.</p></details>
+    </div>
+  </section>
+
+  <section class="closing" aria-labelledby="closing">
+    <h2 id="closing" data-i18n="closing_title">Menos pantalla. Más presente.</h2>
+    <p class="sub" data-i18n="closing_sub">Probalo gratis. Si no es para vos, volver atrás lleva diez segundos.</p>
+    <a class="cta" href="https://play.google.com/store/apps/details?id=com.blanklauncher.app">
+      <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="#000" stroke-width="1.8" stroke-linejoin="round"><path d="M5 3.5v17l14-8.5z"/></svg>
+      <span data-i18n="cta">Descargar en Google Play</span>
+    </a>
+  </section>
+  </main>
+
   <footer>
     <div>© 2026 Blank Apps</div>
-    <div class="links">
-      <a href="https://play.google.com/store/apps/details?id=com.blanklauncher.app" data-i18n="footer_play"></a>
-      <a href="mailto:blankappsdev@gmail.com" data-i18n="footer_support"></a>
-    </div>
+    <nav aria-label="Footer">
+      <a href="https://play.google.com/store/apps/details?id=com.blanklauncher.app">Google Play</a>
+      <a href="mailto:blankappsdev@gmail.com" data-i18n="footer_support">Soporte</a>
+      <a href="https://github.com/matiasjavierberreta/blank-launcher/blob/main/privacy-policy.md" data-i18n="footer_privacy">Privacidad</a>
+    </nav>
   </footer>
 
 </div>
@@ -255,74 +374,150 @@
 <script>
   const i18n = {
     es: {
-      hero_title: "El launcher que no compite por tu atención",
-      hero_sub: "Pantalla negra, reloj, tus apps. Nada de widgets, notificaciones ni ruido visual.",
-      cta: "Descargar en Android",
-      f1_title: "Solo lo esencial",
-      f1_desc: "Sin íconos de colores, sin widgets, sin badges. Reloj y tus apps.",
-      f2_title: "Pausa de 10 segundos",
-      f2_desc: "Un respiro antes de abrir las apps que te distraen.",
-      f3_title: "Horas de foco",
-      f3_desc: "Programá franjas sin distracciones y bloqueá apps por horario.",
-      f4_title: "Negro puro",
-      f4_desc: "Fondo OLED real. Descansa la vista y ahorra batería.",
-      f5_title: "Sin ruido",
-      f5_desc: "Sin ads, sin tracking, sin notificaciones. Nunca.",
-      shots_title: "Así se ve",
-      cap_friction: "Una pausa antes de abrir lo que te distrae.",
-      cap_focus: "Bloqueá apps por horario.",
-      cap_screentime: "Mirá tu tiempo de pantalla real.",
+      hero_title: "Tu teléfono, más tranquilo.",
+      hero_sub: "Un launcher minimalista para Android. Negro OLED, solo texto, y herramientas para que abras menos lo que te distrae.",
+      cta: "Descargar en Google Play",
+      cta_note: "Gratis. Pro con un solo pago, sin suscripción.",
+      f1_title: "Diez segundos para pensarlo dos veces.",
+      f1_desc: "Ponele un temporizador a las apps que te roban tiempo. Antes de abrirlas, una pausa corta te devuelve la decisión.",
+      f1_l1: "Cuenta regresiva: se abre sola a los 10 segundos, salvo que la canceles.",
+      f1_l2: "Pregunta: esperás 10 segundos y tenés que confirmar que querés entrar.",
+      f2_title: "Bloqueá apps en tus horarios de foco.",
+      f2_desc: "Armá ventanas para el trabajo, el estudio o la noche. Durante esas horas, las apps que elijas no se abren desde Blank.",
+      f2_l1: "Horario, días y apps para cada ventana.",
+      f2_l2: "Si de verdad la necesitás, podés abrirla igual por 5 minutos. Queda registrado.",
+      f3_title: "Mirá a dónde se va tu día.",
+      f3_desc: "Tu tiempo en pantalla, las apps que más usás y una racha de días bajo tu meta. Todo se calcula en tu teléfono.",
+      f4_cap: "Gratis",
+      f4_title: "Solo texto. Ningún ícono te llama.",
+      f4_desc: "Sin colores, sin badges, sin widgets. Deslizá hacia arriba y buscá lo que necesitás.",
+      f4_l1: "Hasta 6 apps favoritas en el inicio.",
+      f4_l2: "Ocultá y renombrá apps.",
+      f4_l3: "Tres tamaños de texto.",
+      plans_title: "Gratis para empezar. Pro para quedarte.",
+      plan_free: "Gratis", plan_free_p: "Para siempre",
+      pf1: "Inicio en negro OLED con reloj y favoritas", pf2: "Cajón de apps en texto, con búsqueda", pf3: "Ocultar y renombrar apps", pf4: "Tamaño de texto ajustable",
+      plan_pro_tag: "PAGO ÚNICO", plan_pro_p: "Sin suscripción y sin anuncios",
+      pp0: "Todo lo gratis, y además:", pp1: "Temporizador por app, en dos modos", pp2: "Foco programado con bloqueo por horario", pp3: "Tiempo en pantalla por app",
+      faq_title: "Preguntas frecuentes",
+      q1: "¿Cómo vuelvo a mi launcher anterior?", a1: "En Ajustes de Android, buscá \"App de inicio\" (o \"Apps predeterminadas\") y elegí el que usabas antes. Tus apps y tu pantalla anterior siguen ahí, Blank no borra nada.",
+      q2: "¿Qué permisos pide?", a2: "Ver tus apps instaladas, para poder mostrarlas. Y, solo si usás Tiempo en pantalla, acceso a los datos de uso, que se leen en tu teléfono y no salen de ahí.",
+      q3: "¿Recolecta mis datos?", a3: "No. Sin cuentas, sin analíticas y sin anuncios. La compra de Pro la procesa Google Play.",
+      q4: "¿El foco programado bloquea todo?", a4: "Bloquea abrir esas apps desde Blank. No cierra apps que ya estén abiertas ni intercepta links desde otras apps. Es un portero en la puerta, no un guardia: está pensado para cortar el gesto automático, no para encerrarte.",
+      q5: "¿Pro es una suscripción?", a5: "No. Pagás una vez y queda asociado a tu cuenta de Google, también si cambiás de teléfono.",
       closing_title: "Menos pantalla. Más presente.",
-      closing_sub: "Pago único, sin suscripción.",
-      footer_play: "Google Play",
-      footer_support: "Soporte"
+      closing_sub: "Probalo gratis. Si no es para vos, volver atrás lleva diez segundos.",
+      footer_support: "Soporte", footer_privacy: "Privacidad",
+      app_phone: "Teléfono", app_messages: "Mensajes", app_camera: "Cámara", app_maps: "Mapas",
+      s_sure: "¿Seguro que querés abrirla?", s_tap: "Tocá en cualquier lado para cancelar",
+      s_fcap: "FOCO PROGRAMADO · TRABAJO", s_until: "Hasta las 18:00", s_paused: "Instagram está en pausa.", s_back: "Volver", s_anyway: "Abrir igual por 5 min",
+      s_st: "Tiempo en pantalla", s_today: "HOY", s_left: "Quedan 18 min", s_goal: "Meta: 2 h", s_streak: "5 días seguidos bajo 2 h", s_top: "APPS MÁS USADAS HOY",
+      s_select: "Seleccionar",
+      alt_home: "Pantalla de inicio de Blank Launcher", alt_count: "Cuenta regresiva de 10 segundos antes de abrir Instagram",
+      alt_block: "Instagram bloqueada hasta las 18:00 por foco programado", alt_stats: "Pantalla de tiempo en pantalla con 1 h 42 min hoy", alt_drawer: "Cajón de apps en texto",
+      drawer: ["Ajustes","Calculadora","Calendario","Cámara","Chrome","Contactos","Gmail","Instagram","Mapas","Mensajes","Spotify","Teléfono"],
+      meta_desc: "Blank Launcher es un launcher minimalista para Android: negro OLED, solo texto, con temporizadores y foco programado para usar menos el teléfono."
     },
     en: {
-      hero_title: "The launcher that won't compete for your attention",
-      hero_sub: "Black screen, clock, your apps. No widgets, no notifications, no visual noise.",
-      cta: "Get it on Android",
-      f1_title: "Only the essentials",
-      f1_desc: "No colorful icons, no widgets, no badges. Just a clock and your apps.",
-      f2_title: "10-second pause",
-      f2_desc: "A breath before you open the apps that distract you.",
-      f3_title: "Focus hours",
-      f3_desc: "Schedule distraction-free windows and block apps by time.",
-      f4_title: "Pure black",
-      f4_desc: "True OLED background. Easy on the eyes, easy on the battery.",
-      f5_title: "No noise",
-      f5_desc: "No ads, no tracking, no notifications. Ever.",
-      shots_title: "See it",
-      cap_friction: "A pause before you open what distracts you.",
-      cap_focus: "Block apps by schedule.",
-      cap_screentime: "See your real screen time.",
+      hero_title: "Your phone, quieter.",
+      hero_sub: "A minimal launcher for Android. OLED black, text only, and tools that help you open less of what distracts you.",
+      cta: "Get it on Google Play",
+      cta_note: "Free. Pro is a one-time purchase, no subscription.",
+      f1_title: "Ten seconds to think twice.",
+      f1_desc: "Add a timer to the apps that steal your time. A short pause before they open hands the decision back to you.",
+      f1_l1: "Countdown: it opens on its own after 10 seconds, unless you cancel.",
+      f1_l2: "Ask: wait 10 seconds, then confirm you really want to go in.",
+      f2_title: "Block apps during your focus hours.",
+      f2_desc: "Set up windows for work, study or bedtime. During those hours, the apps you pick won't open from Blank.",
+      f2_l1: "Hours, days and apps for each window.",
+      f2_l2: "If you really need it, open it anyway for 5 minutes. It gets logged.",
+      f3_title: "See where your day goes.",
+      f3_desc: "Your screen time, your most used apps and a streak of days under your goal. Everything is calculated on your phone.",
+      f4_cap: "Free",
+      f4_title: "Just text. No icons calling you.",
+      f4_desc: "No colors, no badges, no widgets. Swipe up and search for what you need.",
+      f4_l1: "Up to 6 favorite apps on your home screen.",
+      f4_l2: "Hide and rename apps.",
+      f4_l3: "Three text sizes.",
+      plans_title: "Free to start. Pro to stay.",
+      plan_free: "Free", plan_free_p: "Forever",
+      pf1: "OLED black home screen with clock and favorites", pf2: "Text-only app drawer with search", pf3: "Hide and rename apps", pf4: "Adjustable text size",
+      plan_pro_tag: "ONE-TIME", plan_pro_p: "No subscription, no ads",
+      pp0: "Everything in Free, plus:", pp1: "Per-app timer, in two modes", pp2: "Scheduled focus with time-based blocking", pp3: "Screen time per app",
+      faq_title: "Questions",
+      q1: "How do I go back to my old launcher?", a1: "In Android Settings, search for \"Home app\" (or \"Default apps\") and pick the one you used before. Your apps and your old home screen are still there. Blank doesn't delete anything.",
+      q2: "What permissions does it ask for?", a2: "Seeing your installed apps, so it can list them. And, only if you use Screen time, access to usage data, which is read on your phone and never leaves it.",
+      q3: "Does it collect my data?", a3: "No. No accounts, no analytics and no ads. The Pro purchase is handled by Google Play.",
+      q4: "Does scheduled focus block everything?", a4: "It blocks opening those apps from Blank. It doesn't close apps that are already open or intercept links from other apps. It's a doorman, not a guard: it's meant to break the automatic reach, not to lock you in.",
+      q5: "Is Pro a subscription?", a5: "No. You pay once and it's tied to your Google account, even if you switch phones.",
       closing_title: "Less screen. More present.",
-      closing_sub: "One-time purchase, no subscription.",
-      footer_play: "Google Play",
-      footer_support: "Support"
+      closing_sub: "Try it for free. If it's not for you, switching back takes ten seconds.",
+      footer_support: "Support", footer_privacy: "Privacy",
+      app_phone: "Phone", app_messages: "Messages", app_camera: "Camera", app_maps: "Maps",
+      s_sure: "Sure you want to open it?", s_tap: "Tap anywhere to cancel",
+      s_fcap: "SCHEDULED FOCUS · WORK", s_until: "Until 18:00", s_paused: "Instagram is paused.", s_back: "Back", s_anyway: "Open anyway for 5 min",
+      s_st: "Screen time", s_today: "TODAY", s_left: "18 min left", s_goal: "Goal: 2 h", s_streak: "5 days in a row under 2 h", s_top: "MOST USED APPS TODAY",
+      s_select: "Select",
+      alt_home: "Blank Launcher home screen", alt_count: "A 10-second countdown before opening Instagram",
+      alt_block: "Instagram blocked until 18:00 by scheduled focus", alt_stats: "Screen time screen showing 1 h 42 min today", alt_drawer: "Text-only app drawer",
+      drawer: ["Calculator","Calendar","Camera","Chrome","Clock","Contacts","Gmail","Instagram","Maps","Messages","Phone","Settings"],
+      meta_desc: "Blank Launcher is a minimal Android launcher: OLED black, text only, with app timers and scheduled focus to help you use your phone less."
     }
   };
 
-  function setLang(lang) {
-    document.documentElement.lang = lang;
-    document.querySelectorAll('[data-i18n]').forEach(el => {
-      const key = el.getAttribute('data-i18n');
-      if (i18n[lang][key]) el.textContent = i18n[lang][key];
+  let current = "es";
+
+  function renderDrawer(lang) {
+    const box = document.getElementById("drawer");
+    box.textContent = "";
+    i18n[lang].drawer.forEach(name => {
+      const d = document.createElement("div");
+      d.style.cssText = "padding:10px 0;display:flex;align-items:center;gap:10px";
+      d.textContent = name;
+      if (name === "Instagram") {
+        d.style.color = "#AAAAAA";
+        d.insertAdjacentHTML("beforeend", '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2"/><path d="M10 2h4"/></svg>');
+      }
+      box.appendChild(d);
     });
-    document.getElementById('btn-es').classList.toggle('active', lang === 'es');
-    document.getElementById('btn-en').classList.toggle('active', lang === 'en');
-    try { localStorage.setItem('blank_lang', lang); } catch(e) {}
   }
 
-  (function() {
+  function tick() {
+    const now = new Date();
+    document.getElementById("clock").textContent =
+      String(now.getHours()).padStart(2, "0") + ":" + String(now.getMinutes()).padStart(2, "0");
+    const loc = current === "es" ? "es-AR" : "en-US";
+    let d = now.toLocaleDateString(loc, { weekday: "long", day: "numeric", month: "long" });
+    document.getElementById("date").textContent = d.charAt(0).toUpperCase() + d.slice(1);
+  }
+
+  function setLang(lang) {
+    current = lang;
+    document.documentElement.lang = lang;
+    const t = i18n[lang];
+    document.querySelectorAll("[data-i18n]").forEach(el => {
+      const v = t[el.getAttribute("data-i18n")];
+      if (typeof v === "string") el.textContent = v;
+    });
+    document.querySelectorAll("[data-i18n-label]").forEach(el => {
+      const v = t[el.getAttribute("data-i18n-label")];
+      if (v) el.setAttribute("aria-label", v);
+    });
+    document.querySelector('meta[name="description"]').setAttribute("content", t.meta_desc);
+    document.getElementById("btn-es").setAttribute("aria-pressed", lang === "es");
+    document.getElementById("btn-en").setAttribute("aria-pressed", lang === "en");
+    renderDrawer(lang);
+    tick();
+    try { localStorage.setItem("blank_lang", lang); } catch (e) {}
+  }
+
+  (function () {
     let lang = null;
-    try { lang = localStorage.getItem('blank_lang'); } catch(e) {}
-    if (!lang) {
-      const nav = (navigator.language || 'es').toLowerCase();
-      lang = nav.startsWith('es') ? 'es' : 'en';
-    }
+    try { lang = localStorage.getItem("blank_lang"); } catch (e) {}
+    if (!lang) lang = (navigator.language || "es").toLowerCase().startsWith("es") ? "es" : "en";
     setLang(lang);
+    setInterval(tick, 15000);
   })();
 </script>
-
 </body>
 </html>
